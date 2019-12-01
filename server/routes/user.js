@@ -23,7 +23,6 @@ app.get('/user', (req, res) => {
                     count
                 });
             })
-
         });
 })
 app.post('/user', (req, res) => {
