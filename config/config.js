@@ -4,6 +4,6 @@ let urlDB;
 if (process.env.NODE_ENV === 'dev') {
     urlDB = 'mongodb://localhost:27017/restserver'
 } else {
-    urlDB = SERVERURLDB;
+    urlDB = process.env.SERVERURLDB;
 }
 process.env.URLDB = urlDB;
