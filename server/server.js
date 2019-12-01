@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(require('./routes/user'))
 mongoose.connect(process.env.URLDB,
-    { useNewUrlParser: true, useCreateIndex: true }, (err, res) => {
+    { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, (err, res) => {
         if (err) throw err;
         console.log('Database Online');
     })
