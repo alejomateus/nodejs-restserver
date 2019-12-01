@@ -4,7 +4,27 @@ const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const User = require('../models/user');
 app.get('/user', (req, res) => {
-    res.json('get User')
+    let from = req.query.from || 0;
+    from = Number(from);
+    let limit = req.query.from || 5;
+    limit = Number(limit);
+    User.find({ state: true }, 'name email role state google img')
+        .skip(from)
+        .limit(5)
+        .exec((err, users) => {
+            if (err) {
+                return res.status(400).json({
+                    err
+                });
+            }
+            User.count({ state: true }, (err, count) => {
+                res.json({
+                    users,
+                    count
+                });
+            })
+
+        });
 })
 app.post('/user', (req, res) => {
     let body = req.body;
@@ -47,6 +67,34 @@ app.put('/user/:id', (req, res) => {
     })
 });
 app.delete('/user/:id', (req, res) => {
-    res.json(`delete User ${req.id}`);
+    let id = req.params.id;
+    // User.findByIdAndRemove(id, (err, deleteuserDB) => {
+    //     if (err) {
+    //         return res.status(400).json({
+    //             err
+    //         });
+    //     }
+    //     if (!deleteuserDB) {
+    //         return res.status(400).json({
+    //             err: {
+    //                 message: 'User not found'
+    //             }
+    //         });
+    //     }
+    //     res.json({
+    //         user: deleteuserDB
+    //     });
+    // });
+    let changeState = { state: false };
+    User.findByIdAndUpdate(id, changeState, { new: true }, (err, userDB) => {
+        if (err) {
+            return res.status(400).json({
+                err
+            });
+        }
+        res.json({
+            user: userDB
+        });
+    })
 });
 module.exports = app;
