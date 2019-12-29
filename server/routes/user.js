@@ -3,7 +3,8 @@ const app = express();
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const User = require('../models/user');
-app.get('/user', (req, res) => {
+const { tokenVerification, AdminRoleVerification } = require('../middlewares/auth');
+app.get('/user', [tokenVerification, AdminRoleVerification], (req, res) => {
     let from = req.query.from || 0;
     from = Number(from);
     let limit = req.query.from || 5;
@@ -25,7 +26,7 @@ app.get('/user', (req, res) => {
             })
         });
 })
-app.post('/user', (req, res) => {
+app.post('/user', [tokenVerification, AdminRoleVerification], (req, res) => {
     let body = req.body;
     let user = new User({
         name: body.name,

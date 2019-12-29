@@ -7,3 +7,5 @@ if (process.env.NODE_ENV === 'dev') {
     urlDB = process.env.SERVERURLDB;
 }
 process.env.URLDB = urlDB;
+process.env.TOKEN_EXPIRATION = 60 * 60 * 24 * 30;
+process.env.SEED = process.env.SEED || 'this-is-the-seed';
