@@ -9,3 +9,4 @@ if (process.env.NODE_ENV === 'dev') {
 process.env.URLDB = urlDB;
 process.env.TOKEN_EXPIRATION = 60 * 60 * 24 * 30;
 process.env.SEED = process.env.SEED || 'this-is-the-seed';
+process.env.CLIENT_ID = process.env.CLIENT_ID || '238523340086-icqlhaonpgvqafhh5b3f189qkq56vetu.apps.googleusercontent.com';
